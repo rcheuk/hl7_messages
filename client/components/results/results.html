@@ -1,7 +1,8 @@
-<div ng-if="ctrl.resultType === 'List'" class="list">
-  <div ng-repeat="segment in ctrl.resultObj.segment">
-  <h3>{{segment.segmentName}}</h3>
-  <p>{{segment.fieldData}}</p>
+<div ng-if="ctrl.resultType === 'List'" class="list panel panel-info">
+  <div class="listSegment" ng-repeat="segment in ctrl.resultObj.segment">
+    <h4 ng-bind-html="ctrl.highlight(segment.segmentName, ctrl.searchTerm)"></h4>
+    <p ng-bind-html="ctrl.highlight(segment.fieldData, ctrl.searchTerm)"></p>
+  </div>
 </div>
 
 <div ng-if="ctrl.resultType === 'Grid'" class="grid">

@@ -15,7 +15,7 @@
       scope: {
         result: '=data',
         resultType: '=type',
-        searchTerm: '=searchText'
+        searchTerm: '='
       },
       controller: ResultsController,
       controllerAs: 'ctrl',
@@ -27,11 +27,12 @@
 
     function resultLinkFunction(scope, element, attr) {
       scope.ctrl.processResults();
-      console.log('scope term', scope.ctrl.searchTerm);
+      scope.ctrl.searchTerm = "ekg";
+      //console.log('scope term', scope.ctrl);
     }
 
     /** @ngInject */
-    function ResultsController($location) {
+    function ResultsController($location, $sce) {
       var ctrl = this;
 
       // util functions
@@ -59,11 +60,19 @@
 
       // end util functions
 
+      ctrl.highlight = function(text, search) {
+        if (text) {
+          if (!search) {
+              return $sce.trustAsHtml(text);
+          }
+          return $sce.trustAsHtml(text.replace(new RegExp(search, 'gi'), '<span class="highlight">$&</span>'));
+        }
+      };
+
       ctrl.processResults = function() {
         var resultObj = {
           segment: []
         };
-        console.log('ctrl result', ctrl.result);
         if (ctrl.result) {
           if (ctrl.result.message) {
             var segments = ctrl.result.message.split("\n");
@@ -76,11 +85,10 @@
                 fieldData: fields.join(', ')
               }
               resultObj.segment.push(data);
-
             });
           }
         }
-        console.log('resultOb', resultObj);
+        //console.log('resultOb', resultObj);
         ctrl.resultObj = resultObj;
       }
 

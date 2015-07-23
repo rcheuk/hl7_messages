@@ -24,10 +24,10 @@
       ctrl.menu = [{
         'title': 'Home',
         'link': '/'
-      },{
+      }/*,{
         'title': 'Data Viz',
         'link': '/dataViz'
-      }, {
+      }*/, {
         'title': 'Help',
         'link': '/help'
       }];
