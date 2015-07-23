@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <!-- Search -->
+      <search searchText="searchTerm" ng-keyup="$event.keyCode == 13 ? search(searchTerm) : null"></search>
+    </div>
+  </div><!-- /row -->
+
+  <div class="row">
+    <div class="col-md-8">
+
+      <!-- Results -->
+      <div ng-show="results">
+        <ul class="nav nav-tabs">
+          <li role="presentation" ng-class="{ active: resultType === 'List'}">
+            <a href="#" ng-click="setResultType('List')">
+            <i class="glyphicon glyphicon-th-list"></i></a>
+          </li>
+          <li role="presentation" ng-class="{active : resultType === 'Grid'}">
+            <a href="#" ng-click="setResultType('Grid')">
+            <i class="glyphicon glyphicon-th-large"></i></a>
+          </li>
+        </ul>
+
+        <div ng-repeat="result in results">
+          <result type="resultType" searchText="searchTerm">
+          </result>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
