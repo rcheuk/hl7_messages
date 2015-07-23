@@ -13,5 +13,6 @@ var _ = require('lodash');
 
 // Get list of suggestions
 exports.index = function(req, res) {
-  res.json(['a', 'ab', 'c', 'cb']);
+  res.json(['ad', 'ab', 'adrian', 'abe', 'andy',
+  'jones', 'jane', 'lee', 'carolinas']);
 };

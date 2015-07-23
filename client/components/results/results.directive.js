@@ -3,42 +3,54 @@
 
   angular
     .module('hl7MessagesApp')
-    .directive('result', navbar);
+    .directive('result', [results]);
+
+    // would want to abstract data parsing to a util method
 
   /** @ngInject */
-  function navbar() {
+  function results() {
     var directive = {
       restrict: 'E',
       templateUrl: 'components/results/results.html',
-      controller: ResultsController,
       scope: {
         result: '=data',
         resultType: '=type',
         searchTerm: '=searchText'
       },
+      controller: ResultsController,
       controllerAs: 'ctrl',
-      bindToController: true
+      bindToController: true,
+      link: resultLinkFunction
     };
 
     return directive;
 
+    function resultLinkFunction(scope, element, attr) {
+      console.log('result', scope);
+      scope.ctrl.processResults();
+    }
+
     /** @ngInject */
     function ResultsController($location) {
       var ctrl = this;
-      console.log('result', ctrl.result, ctrl.resultType, ctrl.searchTerm);
-      ctrl.processResults = function() {
-        if (ctrl.result) {
-          var resultObj = {};
-          var segments = ctrl.result.split("\n");
-          console.log('segments', segments);
-          segments.map(function(s) {
-            console.log('s', s);
-            s.split("\|");
-            resultObj.segment = s[0];
 
-          });
+      ctrl.processResults = function() {
+        console.log('ctrl result', ctrl.result);
+        if (ctrl.result) {
+          if (ctrl.result.message) {
+            var resultObj = {};
+            var segments = ctrl.result.message.split("\n");
+            console.log('segments', segments);
+            segments.map(function(s) {
+              console.log('s', s);
+              s.split("\|");
+              resultObj.segment = s[0];
+
+            });
+          }
         }
       }
+
 
     }
   }
