@@ -1,4 +1,9 @@
-<div>
-  results!
-  {{ctrl.resultObj}}
+<div ng-if="ctrl.resultType === 'List'" class="list">
+  <div ng-repeat="segment in ctrl.resultObj.segment">
+  <h3>{{segment.segmentName}}</h3>
+  <p>{{segment.fieldData}}</p>
+</div>
+
+<div ng-if="ctrl.resultType === 'Grid'" class="grid">
+  <h3>{{ctrl.resultObj.segment}}</h3>
 </div>
